@@ -1,0 +1,67 @@
+package main;
+
+import java.awt.*;
+import java.awt.event.*;
+import java.applet.*;
+/*
+<applet code="Mono" width=400 height = 400"> </applet>
+
+ */
+
+public class Mono extends Applet implements ActionListener {
+
+    TextField t1;
+    String msg = " ";
+    String msg1 = " ";
+    Button Encrypt;
+    Button Decrypt;
+    char[] alpha = {'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'};
+    char[] code = {'q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p', 'a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l', 'z', 'x', 'c', 'v', 'b', 'n', 'm'};
+
+    public void init() {
+        t1 = new TextField(10);
+        Encrypt = new Button("Encrypt");
+        Decrypt = new Button("Decrypt");
+        add(t1);
+        add(Encrypt);
+        add(Decrypt);
+        Encrypt.addActionListener(this);
+        Decrypt.addActionListener(this);
+    }
+
+    public void actionPerformed(ActionEvent ae) {
+        String com1 = ae.getActionCommand();
+        if (com1.equals("Encrypt")){
+            msg = t1.getText();
+            char[] S2 = new char[msg.length() + 1];
+
+            for (int i = 0; i < msg.length(); i++) {
+                for (int j = 0; j < 26; j++) {
+                    if (msg.charAt(i) == alpha[j]) {
+                        S2[i] = code[j];
+                    }
+                }
+            }
+            msg1 = new String(S2);
+        }
+        else if(com1.equals("Decrypt"))
+        {
+            
+            char[] S2 = new char[msg1.length() + 1];
+
+            for (int i = 0; i < msg1.length(); i++) {
+                for (int j = 0; j < 26; j++) {
+                    if (msg1.charAt(i) == code[j]) {
+                        S2[i] = alpha[j];
+                    }
+                }
+            }
+            msg1 = new String(S2);
+        }
+        repaint();
+    }
+
+    public void paint(Graphics g) {
+        g.drawString("Encrypted text: " + msg1, 100, 150);
+    }
+}
