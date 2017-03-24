@@ -1,0 +1,87 @@
+package pkg15405;
+
+import java.awt.*;
+import java.awt.event.*;
+import java.applet.*;
+/*
+ * <applet code="vigniere" width=400 height 400></applet>
+ */
+
+public class Vigniere extends Applet implements ActionListener 
+{
+
+    TextField t1, t2;
+    String msg = "";
+    String key = "";
+    String CT = "";
+    Button Encrypt, Decrypt;
+    char[] alpha = {'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'};
+
+    public void init() {
+        t1 = new TextField(20);
+        t2 = new TextField(20);
+        Encrypt = new Button("Encrypt");
+        Decrypt = new Button("Decrypt");
+        add(t1);
+        add(t2);
+        add(Encrypt);
+        add(Decrypt);
+        Encrypt.addActionListener(this);
+        Decrypt.addActionListener(this);
+    }
+
+    public void actionPerformed(ActionEvent ae) 
+    {
+
+        String com1 = ae.getActionCommand();
+        key = t2.getText();
+        msg = t1.getText();
+
+        char[] text = new char[msg.length()];
+        char[] text1 = new char[msg.length()];
+        char[] text2 = new char[msg.length()];
+        char[] k = new char[key.length()];
+        k = key.toCharArray();
+        
+        text = msg.toCharArray();
+        int j = 0;
+            for (int i = 0; i < msg.length(); i++) 
+            {
+
+                if (j == key.length()) {
+                    j = 0;
+                }
+                text1[i] = k[j];
+                j++;
+            }
+
+        if (com1.equals("Encrypt")) 
+        {
+            int x = 0;
+            char m = 'a';
+            for (int i = 0; i < msg.length(); i++) 
+            {
+                x = ((text[i] + text1[i] - 2 * m) % 26);
+                text2[i] = alpha[x];
+            }
+            CT = new String(text2);
+            t1.setText(CT);
+        }
+        else if(com1.equals("Decrypt"))
+        {
+            int x = 0;
+            char m = 'a';
+            for (int i = 0; i < msg.length(); i++)
+            {
+                 x = ((text[i] - text1[i] + 26) % 26);
+                text2[i] = alpha[x];
+            }
+            CT = new String(text2);
+        }
+        repaint();
+    }
+
+    public void paint(Graphics g) {
+        g.drawString("Encrypted Text: " + CT, 50, 100);
+    }
+}
