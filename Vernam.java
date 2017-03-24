@@ -1,4 +1,4 @@
-package pkg15405;
+package main;
 
 import java.awt.*;
 import java.awt.event.*;
@@ -6,7 +6,7 @@ import java.applet.*;
 /*
  * <applet code="vernam" width=400 height 400></applet>
  */
-
+//pkg15405
 public class Vernam extends Applet implements ActionListener 
 {
 
